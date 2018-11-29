@@ -1,10 +1,21 @@
+import java.util.Collections;
+import java.util.Comparator;
+//import java.util.HashMap;
+import java.util.LinkedHashMap;
+//import java.util.Map;
+
+import static java.util.stream.Collectors.*;
+import static java.util.Map.Entry.*;
+
+
 class Artists {
   ArrayList<Artist> alist;
 
   String[] activities = {"Sleep", "Primary Work", "Social & Meals", "Exercise", "Other Works", "Making Ends Meet"};
-  HashMap <String, Float> minHM = new HashMap <String, Float>();
-  HashMap <String, Float> maxHM = new HashMap <String, Float>();
-  
+  FloatDict mins = new FloatDict();
+  FloatDict maxs = new FloatDict();
+  FloatDict variances = new FloatDict();
+
   Artists(String filename) {
     alist = new ArrayList<Artist>();
     Table table = loadTable(filename, "header");
@@ -12,19 +23,27 @@ class Artists {
     for (TableRow row : table.rows()) {
       alist.add(new Artist(row));
     }
-
+    
     for (String activity : activities) {
       float min=24;
       float max=0;
+      ArrayList<Double> values = new ArrayList<Double>();
+
       for (Artist artist : alist) {
+        values.add((double)artist.getActivity(activity));
+
         if (artist.getActivity(activity)<min)
           min=artist.getActivity(activity);
+
         if (artist.getActivity(activity)>max)
           max=artist.getActivity(activity);
       }
-      minHM.put(activity, min);
-      maxHM.put(activity, max);
+      mins.set(activity,min);
+      maxs.set(activity, max);
+      variances.set(activity, (float)variance(values));
+      variances.sortValuesReverse();
     }
+
+    
   }
-  
 }

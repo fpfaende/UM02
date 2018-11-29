@@ -14,13 +14,16 @@ void setup() {
 
   artists = new Artists("creative-routines-enhanced.csv");
   
-  for (Map.Entry me : artists.minHM.entrySet()) {
-    print(me.getKey() + " min is ");
-    float min = (float)me.getValue();
+  for (String activity : artists.mins.keyArray()) {
+    print(activity + " min is ");
+    float min = artists.mins.get(activity);
     print(min + " & max is ");
-    float max  = (float)artists.maxHM.get(me.getKey());
-    println(max + ". Min equivalent to: " + map(min,0,max,0,height));
+    float max  = artists.maxs.get(activity);
+    println(max + ". Min Y: " + map(min,0,max,0,height) + " " + artists.variances.get(activity));
   }
-
+  
+  for(Artist artist:artists.alist){
+    println(artist.name); 
+  }
 
 }
