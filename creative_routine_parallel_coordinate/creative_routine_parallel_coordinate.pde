@@ -14,16 +14,17 @@ void setup() {
 
   artists = new Artists("creative-routines-enhanced.csv");
   
-  for (String activity : artists.mins.keyArray()) {
+  for (String activity : artists.variances.keyArray()) {
     print(activity + " min is ");
     float min = artists.mins.get(activity);
     print(min + " & max is ");
     float max  = artists.maxs.get(activity);
-    println(max + ". Min Y: " + map(min,0,max,0,height) + " " + artists.variances.get(activity));
+    println(max + ". Min Y: " + map(min,0,max,0,height) + " " + artists.variances.get(activity)+" "+artists.averages.get(activity) );
+    for(Artist artist:artists.alist){
+      println("\t" + artist.name + " " + artist.getActivity(activity)+" "+map(artist.getActivity(activity),0,max,0,height) );
+    }
   }
   
-  for(Artist artist:artists.alist){
-    println(artist.name); 
-  }
+  
 
 }

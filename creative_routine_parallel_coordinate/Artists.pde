@@ -15,6 +15,7 @@ class Artists {
   FloatDict mins = new FloatDict();
   FloatDict maxs = new FloatDict();
   FloatDict variances = new FloatDict();
+  FloatDict averages = new FloatDict();
 
   Artists(String filename) {
     alist = new ArrayList<Artist>();
@@ -41,8 +42,9 @@ class Artists {
       mins.set(activity,min);
       maxs.set(activity, max);
       variances.set(activity, (float)variance(values));
-      variances.sortValuesReverse();
+      averages.set(activity, (float)average(values));
     }
+    variances.sortValuesReverse();
 
     
   }
